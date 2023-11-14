@@ -2,7 +2,7 @@ package com.drone.droneapi.config;
 
 public class MessageText {
     public static final String DRONE_CARGO_WEIGHT_EXCEEDED = "The maximum load weight of the drone %sgr was exceeded. Load weight to transport of %sgr";
-    public static final String DRONE_CHANGE_STATE_TO_LOADING_WITH_BATTERY_LOW = "The drone SN:%s has the battery status low %s%";
+    public static final String DRONE_CHANGE_STATE_TO_LOADING_WITH_BATTERY_LOW = "The drone SN:%s has the battery status low %.2f%%";
     public static final String DRONE_LOADED = "The drone was loaded with the medication satisfactorily.";
     public static final String DRONE_LOG_NOT_FOUND = "No battery capacity records found for drone with this serial number %s";
     public static final String DRONE_NOT_FOUND = "No drone found with the serial number %s";
@@ -22,6 +22,9 @@ public class MessageText {
 
     public static final String ENDPOINT_NAME_REGISTER_DRONE = "Registering a new drone";
     public static final String ENDPOINT_NAME_LOAD_MEDICATION = "Loading a drone with medication items";
+    public static final String ENDPOINT_NAME_GET_DRONE = "Get a drone filter by your serial number";
+    public static final String ENDPOINT_NAME_GET_ALL_DRONE = "Get all drones";
+    public static final String ENDPOINT_NAME_DELETE_DRONE = "Delete drone";
     public static final String ENDPOINT_NAME_CHECK_LOAD_MEDICATION = "Checking loaded medication items for a given drone";
     public static final String ENDPOINT_NAME_CHECK_AVAILABLE_DRONES = "Checking available drones for loading";
     public static final String ENDPOINT_NAME_CHECK_BATTERY_LEVEL_DRONE = "Check drone battery level for a given drone";

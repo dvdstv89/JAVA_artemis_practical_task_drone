@@ -1,6 +1,7 @@
 package com.drone.droneapi.services;
 
 import com.drone.droneapi.config.MessageText;
+import com.drone.droneapi.dto.DroneDto;
 import com.drone.droneapi.models.Drone;
 import com.drone.droneapi.models.PeriodicTaskLog;
 import com.drone.droneapi.repositories.PeriodicTaskLogRepository;
@@ -44,7 +45,7 @@ public class PeriodicTaskLogService extends BaseService implements IPeriodicTask
         try {
             ApiResponse droneApiResponse = droneService.getDrones();
             if (droneApiResponse.isValid()) {
-                var drones = (List<Drone>) droneApiResponse.getResult();
+                var drones = (List<DroneDto>) droneApiResponse.getResult();
                 if (isNullOrEmpty(drones)) {
                     throw new IllegalArgumentException(MessageText.DRONE_NOT_FOUND_EMPTY_DB);
                 } else {
@@ -58,7 +59,7 @@ public class PeriodicTaskLogService extends BaseService implements IPeriodicTask
         return response;
     }
 
-    private ApiResponse createLogs(List<Drone> drones) {
+    private ApiResponse createLogs(List<DroneDto> drones) {
         try {
             List<String> messages = new ArrayList<>();
             drones.forEach(drone -> {
@@ -75,7 +76,7 @@ public class PeriodicTaskLogService extends BaseService implements IPeriodicTask
         return response;
     }
 
-    private void createLog(Drone drone) {
+    private void createLog(DroneDto drone) {
         try {
             PeriodicTaskLog droneBatteryLog = new PeriodicTaskLog(drone.getSerialNumber(), drone.getBatteryCapacity());
             periodicTaskLogRepository.save(droneBatteryLog);
