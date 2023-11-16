@@ -1,6 +1,6 @@
 package com.drone.droneapi.dto;
 
-import com.drone.droneapi.config.MessageText;
+import com.drone.droneapi.error.MessageText;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

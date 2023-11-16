@@ -1,7 +1,7 @@
 package com.drone.droneapi.controllers;
 
-import com.drone.droneapi.utils.ApiResponse;
-import com.drone.droneapi.config.MessageText;
+import com.drone.droneapi.error.ApiResponse;
+import com.drone.droneapi.error.MessageText;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,17 +17,11 @@ public class BaseController {
 
     protected ResponseEntity<ApiResponse> handleApiResponse(ApiResponse response, String endpoint) {
         switch (response.getStatusCode()) {
-            case OK:
-                logInfo(String.format(MessageText.HANDLE_API_RESPONSE_OK, endpoint));
-                break;
             case CREATED:
                 logInfo(String.format(MessageText.HANDLE_API_RESPONSE_CREATED, endpoint));
                 break;
-            case NOT_FOUND:
-                logInfo(String.format(MessageText.HANDLE_API_RESPONSE_NOT_FOUND, endpoint));
-                break;
             default:
-                logError(String.format(MessageText.HANDLE_API_RESPONSE_BAD_RESPONSE, endpoint));
+                logInfo(String.format(MessageText.HANDLE_API_RESPONSE_OK, endpoint));
                 break;
         }
         return new ResponseEntity<>(response, response.getStatusCode());
@@ -41,12 +35,6 @@ public class BaseController {
     private void logInfo(String message) {
         if (logger != null) {
             logger.info(message);
-        }
-    }
-
-    private void logError(String message) {
-        if (logger != null) {
-            logger.error(message);
         }
     }
 }

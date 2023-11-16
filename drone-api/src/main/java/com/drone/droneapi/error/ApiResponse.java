@@ -1,29 +1,51 @@
-package com.drone.droneapi.utils;
+package com.drone.droneapi.error;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.method.HandlerMethod;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@JsonPropertyOrder({ "statusCode", "isValid", "errors", "result" })
+@JsonPropertyOrder({"statusCode", "isValid", "errors", "result"})
 public class ApiResponse {
     private HttpStatus statusCode;
     @JsonProperty("isValid")
     private boolean isValid;
     private List<String> errors;
     private Object result;
+    private long date;
+
+    @Value("${application.name}")
+    @ReadOnlyProperty
+    private String applicationName;
+    private String controllerName;
+    private String servicePathName;
+
+
+  //  public ApiResponse(HttpServletRequest request, HandlerMethod handlerMethod) {
+     //   errors = new ArrayList<>();
+   //     date = System.currentTimeMillis();
+        //controllerName = handlerMethod.getMethod().getDeclaringClass().toString();
+       // servicePathName = request.getRequestURL().toString();
+    //}
 
     public ApiResponse() {
         errors = new ArrayList<>();
+        date = System.currentTimeMillis();
     }
+
     public ApiResponse(BindingResult bindingResult) {
         errors = new ArrayList<>();
         addValidationErrors(bindingResult);
@@ -41,20 +63,6 @@ public class ApiResponse {
         setStatusCode(HttpStatus.CREATED);
         setValid(true);
         setErrors(new ArrayList<>());
-    }
-
-    public void addBadRequestResponse400(String exception) {
-        setStatusCode(HttpStatus.BAD_REQUEST);
-        setValid(false);
-        getErrors().add(exception);
-        setResult(null);
-    }
-
-    public void addNotFoundResponse404(String message) {
-        setStatusCode(HttpStatus.NOT_FOUND);
-        setValid(false);
-        getErrors().add(message);
-        setResult(null);
     }
 
     private void addValidationErrors(BindingResult bindingResult) {

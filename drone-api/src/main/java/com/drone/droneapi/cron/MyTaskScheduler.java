@@ -1,7 +1,9 @@
 package com.drone.droneapi.cron;
 
+import com.drone.droneapi.error.LocalBadRequestException;
+import com.drone.droneapi.error.LocalNotFoundException;
 import com.drone.droneapi.services.IPeriodicTaskLogService;
-import com.drone.droneapi.utils.ApiResponse;
+import com.drone.droneapi.error.ApiResponse;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -21,15 +23,21 @@ public class MyTaskScheduler {
     }
 
     @Scheduled(fixedDelay = 10000)
-    public void logDroneBattery(){
-        ApiResponse logsApiResponse = periodicTaskLogService.periodicTaskLogs();
-        if (logsApiResponse.isValid())
-        {
-            logger.info((String)logsApiResponse.getResult());
+    public void logDroneBattery()  {
+
+        try{
+            ApiResponse logsApiResponse = periodicTaskLogService.periodicTaskLogs();
+            if (logsApiResponse.isValid())
+            {
+                logger.info((String)logsApiResponse.getResult());
+            }
+            else
+            {
+                logger.error(String.join(" && ", logsApiResponse.getErrors()));
+            }
         }
-        else
-        {
-            logger.error(String.join(" && ", logsApiResponse.getErrors()));
+        catch (Exception ex){
+            logger.error(ex.getMessage());
         }
     }
 }

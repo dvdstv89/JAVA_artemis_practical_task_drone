@@ -1,8 +1,7 @@
 package com.drone.droneapi.controllers;
 
-import com.drone.droneapi.config.MessageText;
+import com.drone.droneapi.error.*;
 import com.drone.droneapi.services.IPeriodicTaskLogService;
-import com.drone.droneapi.utils.ApiResponse;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class LogController extends BaseController {
     }
 
     @GetMapping("/{serialNumber}")
-    public ResponseEntity<ApiResponse> getDrones(@PathVariable("serialNumber") String serialNumber){
+    public ResponseEntity<ApiResponse> getDrones(@PathVariable("serialNumber") String serialNumber) throws LocalIlegalArgumentRequestException, LocalNotFoundException, LocalBadRequestException {
         ApiResponse response = periodicTaskLogService.getAllLogsBySerialNumber(serialNumber);
         return handleApiResponse(response, MessageText.ENDPOINT_NAME_SHOW_LOGS);
     }

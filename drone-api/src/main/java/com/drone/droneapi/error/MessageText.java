@@ -1,4 +1,4 @@
-package com.drone.droneapi.config;
+package com.drone.droneapi.error;
 
 public class MessageText {
     public static final String DRONE_CARGO_WEIGHT_EXCEEDED = "The maximum load weight of the drone %sgr was exceeded. Load weight to transport of %sgr";

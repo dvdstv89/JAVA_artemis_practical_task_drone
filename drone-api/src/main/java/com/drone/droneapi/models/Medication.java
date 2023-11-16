@@ -1,6 +1,6 @@
 package com.drone.droneapi.models;
 
-import com.drone.droneapi.config.MessageText;
+import com.drone.droneapi.error.MessageText;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
